@@ -1,0 +1,242 @@
+{
+    "[chain-0]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/chain-0.png"
+    },
+    "[chain-1]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/chain-1.png"
+    },
+    "[chain-2]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/chain-2.png"
+    },
+    "[chain-3]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/chain-3.png"
+    },
+    "[chain-4]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/chain-4.png"
+    },
+    "[chain-5]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/chain-5.png"
+    },
+    "[chain-6]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/chain-6.png"
+    },
+    "[chain-7]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/chain-7.png"
+    },
+    "[fhl-0]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/fhl-0.png"
+    },
+    "[fhl-1]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/fhl-1.png"
+    },
+    "[fhl-2]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/fhl-2.png"
+    },
+    "[fhl-3]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/fhl-3.png"
+    },
+    "[fhl-4]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/fhl-4.png"
+    },
+    "[fhl-5]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/fhl-5.png"
+    },
+    "[fhl-6]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/fhl-6.png"
+    },
+    "[fhl-7]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/fhl-7.png"
+    },
+    "[gsword-0]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/gsword-0.png"
+    },
+    "[gsword-1]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/gsword-1.png"
+    },
+    "[gsword-2]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/gsword-2.png"
+    },
+    "[gsword-3]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/gsword-3.png"
+    },
+    "[gsword-4]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/gsword-4.png"
+    },
+    "[gsword-5]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/gsword-5.png"
+    },
+    "[gsword-6]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/gsword-6.png"
+    },
+    "[gsword-7]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/gsword-7.png"
+    },
+    "[lsword-0]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/lsword-0.png"
+    },
+    "[lsword-1]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/lsword-1.png"
+    },
+    "[lsword-2]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/lsword-2.png"
+    },
+    "[lsword-3]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/lsword-3.png"
+    },
+    "[lsword-4]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/lsword-4.png"
+    },
+    "[lsword-5]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/lsword-5.png"
+    },
+    "[lsword-6]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/lsword-6.png"
+    },
+    "[lsword-7]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/lsword-7.png"
+    },
+    "[pole-0]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/pole-0.png"
+    },
+    "[pole-1]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/pole-1.png"
+    },
+    "[pole-2]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/pole-2.png"
+    },
+    "[pole-3]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/pole-3.png"
+    },
+    "[pole-4]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/pole-4.png"
+    },
+    "[pole-5]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/pole-5.png"
+    },
+    "[pole-6]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/pole-6.png"
+    },
+    "[pole-7]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/pole-7.png"
+    },
+    "[scythe-0]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/scythe-0.png"
+    },
+    "[scythe-1]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/scythe-1.png"
+    },
+    "[scythe-2]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/scythe-2.png"
+    },
+    "[scythe-3]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/scythe-3.png"
+    },
+    "[scythe-4]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/scythe-4.png"
+    },
+    "[scythe-5]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/scythe-5.png"
+    },
+    "[scythe-6]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/scythe-6.png"
+    },
+    "[scythe-7]": {
+        "size": 24,
+        "type": "image",
+        "url": "https://natsulus.github.io/AltusViewer/altus/32/scythe-7.png"
+    }
+}
