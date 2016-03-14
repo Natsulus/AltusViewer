@@ -7,7 +7,7 @@ for size in iconSizes:
     files = os.listdir("./icons/" + size)
     data = {}
     for file in files:
-        path = size + "/" + file
+        path = "icons/" + size + "/" + file
         key = "[" + os.path.splitext(file)[0] + "]"
         data[key] = {"url": "https://natsulus.github.io/AltusViewer/altus/" + path, "size": 24, "type": "image"}
     file = open("./data/icons-" + size + ".json", "w")
