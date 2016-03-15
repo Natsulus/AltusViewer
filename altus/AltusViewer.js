@@ -84,6 +84,7 @@ AltusViewer.updateIcons = function(form) {
             AltusViewer.iconList[key].size = value;
             AltusViewer.sizes[key] = value;
             $(".av-icon-table").find("div[menu-icon='" + key + "']").css({"width": value + "px", "height": value + "px", "backgroundSize": value + "px auto"});
+            $(".iconwrapper[tooltip='" + key + "']").css("top", Math.ceil((value - 8) / 2.5) + "px");
             $(".iconwrapper[tooltip='" + key + "']").find("*").css({"width": value + "px", "height": value + "px", "backgroundSize": value + "px auto"});
         } else {
             form[key].value = AltusViewer.iconList[key].size;
@@ -408,8 +409,7 @@ AltusViewer.prototype.load = function() {
         + '.av-icon-table tbody tr {background: #F7F7F7!important;}'
         + '.av-icon-table tbody td {text-align: center; font-size: small;}'
         + '.icon-tooltip{display: inline-block; position: relative;}'
-        + '.icon-tooltip:hover:after{background: rgba(181,181,181,0.8); border-radius: 5px; bottom: 36px; color: #fff; content: attr(tooltip); left: 13%; padding: 5px 15px; position: absolute; z-index: 98; display: inline-block;}'
-        + '.icon-tooltip:hover:before{border: solid; border-color: rgba(181,181,181,0.8) transparent; border-width: 8px 8px 0 0; bottom: 30px; content: ""; left: 20%; position: absolute; z-index: 99;}'
+        + '.icon-tooltip:hover:after{background: rgba(31,31,31,0.6); border: 1px solid rgba(142,142,142,0.6); border-radius: 5px; top: -24px; color: #fff; content: attr(tooltip); left: -20px; padding: 3px 10px; position: absolute; z-index: 98; white-space: nowrap;}'
         + '</style>"'
     );
 };
