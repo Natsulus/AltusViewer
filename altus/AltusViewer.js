@@ -307,7 +307,7 @@ AltusViewer.settingsArray = {
         "id": "altus-stats",
         "info": "Enables AltusRPG Profile",
         "default": true,
-        "implemented": true
+        "implemented": false
     },
     "Enable Icon Tooltip": {
         "id": "altus-icon-tooltip",
