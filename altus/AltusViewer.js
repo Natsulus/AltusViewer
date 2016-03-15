@@ -1,8 +1,10 @@
 //META{"name":"AltusViewer"}*//
 
-function AltusViewer() {
-}
+function AltusViewer() {}
 
+var observer;
+
+AltusViewer.settings = null;
 AltusViewer.settingsButton = null;
 AltusViewer.settingsPanel = null;
 AltusViewer.settingsLastTab = null;
@@ -34,19 +36,44 @@ AltusViewer.updateSettings = function (checkbox) {
     cb.prop("checked", enabled);
     AltusViewer.settings[id] = enabled;
     AltusViewer.prototype.saveSettings();
-    console.log("id", enabled);
+    switch (id) {
+        case "altus-icons":
+            if (enabled) {
+                $(".chat").each(function () {
+                    observer.observe(this, {childList: true, characterData: true, attributes: false, subtree: true});
+                });
+                AltusViewer.process();
+            } else {
+                observer.disconnect();
+                $(".iconwrapper").replaceWith(function () {
+                    return $(this).attr("tooltip");
+                });
+                $(".av-icons-scanned").removeClass("av-icons-scanned");
+            }
+            break;
+        case "altus-stats":
+            break;
+        case "altus-icon-tooltip":
+            if (enabled) {
+                $(".iconwrapper[tooltip]").addClass("icon-tooltip");
+            } else {
+                $(".iconwrapper[tooltip]").removeClass("icon-tooltip");
+            }
+            break;
+        case "altus-hd-icons":
+            break;
+    }
 };
 
 AltusViewer.updateIcons = function (form) {
     $.each(AltusViewer.iconList, function (key) {
         var value = +form[key].value;
-        if(value >= 12 && value <= 40) {
+        if (value >= 12 && value <= 40) {
             AltusViewer.iconList[key].size = value;
         } else {
             form[key].value = AltusViewer.iconList[key].size;
         }
     });
-    console.log(AltusViewer.iconList);
 };
 
 AltusViewer.createSettings = function () {
@@ -93,10 +120,10 @@ AltusViewer.createSettings = function () {
         + '                </ul>'
         + '            </div>'
         + '            <div class="av-pane control-group" id="av-icons-pane" style="display: none;">'
-        + '                <table class="av-icon-table">' //av-icon-table
+        + '                <table class="av-icon-table">'
         + '                    <thead>'
         + '                        <tr>'
-        + '                            <th width="100px">Emote</th>'
+        + '                            <th width="100px">Icon</th>'
         + '                            <th>Identifier</th>'
         + '                            <th width="50px">Size</th>'
         + '                        </tr>'
@@ -198,10 +225,8 @@ AltusViewer.createSettings = function () {
                             $("#av-settings-new").removeClass("selected");
                             AltusViewer.settingsPanel.hide();
                         });
-                        var tabBarAttempts = 0;
                         var tabBarSet = setInterval(function () {
                             var bdtab = $("#bd-settings-new");
-                            tabBarAttempts++;
                             if (bdtab.length > 0) {
                                 clearInterval(tabBarSet);
                                 tabBar.append(AltusViewer.settingsButton);
@@ -210,7 +235,6 @@ AltusViewer.createSettings = function () {
                                     $("#av-settings-new").removeClass("selected");
                                     AltusViewer.settingsPanel.hide();
                                 });
-                                console.log("[Altus Viewer] Settings tab attached after " + tabBarAttempts + " tries");
                             }
                         }, 50);
 
@@ -238,15 +262,27 @@ Array.prototype.extend = function (other_array) {
 
 AltusViewer.settingsArray = {
     "Enable Icons": {
-        "id": "altus-icon",
+        "id": "altus-icons",
         "info": "Show AltusRPG Icons",
         "default": true,
-        "implemented": true},
-    "Enable Stats": {"id": "altus-stats", "info": "Enables AltusRPG Profile", "default": true, "implemented": true},
+        "implemented": true
+    },
+    "Enable Stats": {
+        "id": "altus-stats",
+        "info": "Enables AltusRPG Profile",
+        "default": true,
+        "implemented": true
+    },
     "Enable Icon Tooltip": {
         "id": "altus-icon-tooltip",
         "info": "Shows AltusRPG Icon Names on Hover",
         "default": true,
+        "implemented": true
+    },
+    "Enable HD Icons": {
+        "id": "altus-hd-icons",
+        "info": "Use 400x400 icons.",
+        "default": false,
         "implemented": true
     }
 };
@@ -279,20 +315,17 @@ AltusViewer.prototype.load = function () {
         console.log("[Altus Viewer] Preloading " + preloadImages.list.length + " icon(s)")
     }
 
-    AltusViewer.isReady = true;
-    preloadImages();
-    console.log("[Altus Viewer] Ready");
-    $.getJSON("https://natsulus.github.io/AltusViewer/altus/data/icons-32.json", function(list){
-     AltusViewer.iconList = list;
-     AltusViewer.isReady = true;
-     preloadImages();
-     console.log("[Altus Viewer] Ready");
-     }).fail(function(xhr,status,error){
-     console.log("[Altus Viewer] Error Loading Icon List '" + status + ":" + error + "'. Using fallback");
-     AltusViewer.isReady = true;
-     });
+    $.getJSON("https://natsulus.github.io/AltusViewer/altus/data/icons-32.json", function (list) {
+        AltusViewer.iconList = list;
+        AltusViewer.isReady = true;
+        preloadImages();
+        console.log("[Altus Viewer] Ready");
+    }).fail(function (xhr, status, error) {
+        console.log("[Altus Viewer] Error Loading Icon List '" + status + ":" + error + "'. Using fallback");
+        AltusViewer.isReady = true;
+    });
     $('head').append(
-        '<style>'
+        '<style id="altus-css">'
         + '.iconwrapper {display: inline-block; position: relative;}'
         + '.altus-icon-sprite {animation: play 1s steps(1) infinite;}'
         + '@keyframes play {from{background-position: 0 0;} to {background-position: 0 100%;}}'
@@ -328,20 +361,21 @@ AltusViewer.prototype.start = function () {
     AltusViewer.settings = JSON.parse(localStorage.getItem("altusSettings")) || AltusViewer.prototype.getDefaultSettings();
     AltusViewer.prototype.saveSettings();
     MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
-    var observer = new MutationObserver(function (mutations, observer) {
-        if (AltusViewer.isReady && AltusViewer.settings["altus-icon"]) AltusViewer.process();
-    });
     var startTry = setInterval(function () {
         if (AltusViewer.isReady) clearInterval(startTry);
         else return;
 
-        var chatTries = 0;
+        observer = new MutationObserver(function (mutations, observer) {
+            AltusViewer.process();
+        });
+
         var chatRetry = setInterval(function () {
-            chatTries++;
             $(".chat").each(function () {
-                console.log("[Altus Viewer] Chat listener attached after " + chatTries + " tries");
                 clearInterval(chatRetry);
-                observer.observe(this, {childList: true, characterData: true, attributes: false, subtree: true});
+                if (AltusViewer.settings["altus-icons"]) {
+                    observer.observe(this, {childList: true, characterData: true, attributes: false, subtree: true});
+                    AltusViewer.process();
+                }
             });
         }, 100);
         AltusViewer.createSettings();
@@ -363,7 +397,8 @@ AltusViewer.parseIcon = function (node) {
 
                 var iconNode = document.createElement("div");
                 iconNode.className = "iconwrapper";
-                if (AltusViewer.settings["altus-icon-tooltip"]) iconNode.className += " icon-tooltip"; iconNode.setAttribute("tooltip", key);
+                iconNode.setAttribute("tooltip", key);
+                if (AltusViewer.settings["altus-icon-tooltip"]) iconNode.className += " icon-tooltip";
                 iconNode.style.cssText = "top: " + Math.ceil((icon.size - 8) / 2.5) + "px";
                 var iconImage;
                 if (icon.type == "image") {
