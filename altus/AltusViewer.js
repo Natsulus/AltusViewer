@@ -119,7 +119,7 @@ AltusViewer.createSettings = function() {
         + '        <div class="tab-bar TOP">'
         + '            <div class="tab-bar-item av-tab" id="av-settings-tab" onclick="AltusViewer.prototype.changeTab(\'av-settings-tab\');">Altus Viewer</div>'
         + '            <div class="tab-bar-item av-tab" id="av-icons-tab" onclick="AltusViewer.prototype.changeTab(\'av-icons-tab\');">Icons</div>'
-        + '            <div class="tab-bar-item av-tab" id="av-stats-tab" onclick="AltusViewer.prototype.changeTab(\'av-stats-tab\');">Stats</div>'
+        //+ '            <div class="tab-bar-item av-tab" id="av-stats-tab" onclick="AltusViewer.prototype.changeTab(\'av-stats-tab\');">Stats</div>'
         + '        </div>'
         + '        <div class="av-settings">'
         + ''
