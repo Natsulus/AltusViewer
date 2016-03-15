@@ -536,7 +536,7 @@ AltusViewer.prototype.getDescription = function() {
 };
 
 AltusViewer.prototype.getVersion = function() {
-    return "0.6.0";
+    return "1.0.0";
 };
 
 AltusViewer.prototype.getAuthor = function() {
