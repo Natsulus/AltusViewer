@@ -6,6 +6,7 @@ var observer;
 
 AltusViewer.settings = null;
 AltusViewer.sizes = null;
+AltusViewer.loadedSizes = {"32": false, "400": false};
 AltusViewer.settingsButton = null;
 AltusViewer.settingsPanel = null;
 AltusViewer.settingsLastTab = null;
@@ -62,17 +63,16 @@ AltusViewer.updateSettings = function(checkbox) {
             }
             break;
         case "altus-hd-icons":
-            AltusViewer.loadImages(enabled, function () {
-                observer.disconnect();
-                $(".iconwrapper").replaceWith(function() {
-                    return $(this).attr("tooltip");
+            AltusViewer.loadImages(enabled);
+            if (enabled) {
+                $(".altus-icon").each(function(index, element) {
+                    $(this).css("background-image", $(this).css("background-image").replace("32", "400"));
                 });
-                $(".av-icons-scanned").removeClass("av-icons-scanned");
-                $(".chat").each(function() {
-                    observer.observe(this, {childList: true, characterData: true, attributes: false, subtree: true});
+            } else {
+                $(".altus-icon").each(function(index, element) {
+                    $(this).css("background-image", $(this).css("background-image").replace("400", "32"));
                 });
-                AltusViewer.process();
-            });
+            }
             break;
     }
 };
@@ -82,10 +82,14 @@ AltusViewer.updateIcons = function(form) {
         var value = +form[key].value;
         if (value >= 12 && value <= 40) {
             AltusViewer.iconList[key].size = value;
+            AltusViewer.sizes[key] = value;
+            $(".av-icon-table").find("div[menu-icon='" + key + "']").css({"width": value + "px", "height": value + "px", "backgroundSize": value + "px auto"});
+            $(".iconwrapper[tooltip='" + key + "']").find("*").css({"width": value + "px", "height": value + "px", "backgroundSize": value + "px auto"});
         } else {
             form[key].value = AltusViewer.iconList[key].size;
         }
     });
+    AltusViewer.prototype.saveSizes();
 };
 
 AltusViewer.createSettings = function() {
@@ -156,6 +160,7 @@ AltusViewer.createSettings = function() {
             iconImage.style.height = icon.size + "px";
             iconImage.style.backgroundImage = "url('" + icon.url + "')";
             iconImage.style.backgroundSize = icon.size + "px auto";
+            iconImage.style.display = "inline-block";
         } else if (icon.type == "animation") {
             iconImage = document.createElement("div");
             iconImage.className = "altus-icon altus-icon-sprite";
@@ -167,7 +172,9 @@ AltusViewer.createSettings = function() {
             iconImage.style.backgroundSize = icon.size + "px auto";
             iconImage.style.marginLeft = "auto";
             iconImage.style.marginRight = "auto";
+            iconImage.style.display = "inline-block";
         }
+        iconImage.setAttribute("menu-icon", key);
 
         settingsInner += ''
             + '                        <td>' + iconImage.outerHTML + '</td>';
@@ -336,7 +343,7 @@ AltusViewer.applySizes = function () {
     }
 };
 
-AltusViewer.preloadImages = function() {
+AltusViewer.preloadImages = function(size) {
     if (!AltusViewer.preloadImages.list) {
         AltusViewer.preloadImages.list = [];
     }
@@ -345,11 +352,10 @@ AltusViewer.preloadImages = function() {
         img.onload = function() {
             var index = AltusViewer.preloadImages.list.indexOf(this);
             if (index !== -1) {
-                // remove image from the array once it's loaded
-                // for memory consumption reasons
                 AltusViewer.preloadImages.list.splice(index, 1);
                 if (AltusViewer.preloadImages.list.length == 0) {
-                    console.log("[Altus Viewer] Icons Preloaded")
+                    AltusViewer.loadedSizes[size] = true;
+                    console.log("[Altus Viewer] " + size + "x" + size + " Icons Preloaded");
                 }
             }
         };
@@ -359,13 +365,13 @@ AltusViewer.preloadImages = function() {
     console.log("[Altus Viewer] Preloading " + AltusViewer.preloadImages.list.length + " icon(s)")
 };
 
-AltusViewer.loadImages = function(enabled, cb) {
+AltusViewer.loadImages = function(enabled) {
     if (enabled) {
         $.getJSON("https://natsulus.github.io/AltusViewer/altus/data/icons-400.json", function(list) {
             AltusViewer.iconList = list;
             AltusViewer.applySizes();
             AltusViewer.isReady = true;
-            AltusViewer.preloadImages();
+            if (!AltusViewer.loadedSizes["400"]) AltusViewer.preloadImages("400");
         }).fail(function(xhr, status, error) {
             console.log("[Altus Viewer] Error Loading Icon List '" + status + ":" + error + "'. Using fallback");
             AltusViewer.isReady = true;
@@ -375,13 +381,12 @@ AltusViewer.loadImages = function(enabled, cb) {
             AltusViewer.iconList = list;
             AltusViewer.applySizes();
             AltusViewer.isReady = true;
-            AltusViewer.preloadImages();
+            if (!AltusViewer.loadedSizes["32"]) AltusViewer.preloadImages("32");
         }).fail(function(xhr, status, error) {
             console.log("[Altus Viewer] Error Loading Icon List '" + status + ":" + error + "'. Using fallback");
             AltusViewer.isReady = true;
         });
     }
-    if (cb) cb();
 };
 
 AltusViewer.prototype.load = function() {
@@ -458,9 +463,10 @@ AltusViewer.parseIcon = function(node) {
                 if (icon.type == "image") {
                     iconImage = document.createElement("div");
                     iconImage.className = "altus-icon";
-                    iconImage.src = icon.url;
-                    iconImage.width = icon.size;
-                    iconImage.height = icon.size;
+                    iconImage.style.width = icon.size + "px";
+                    iconImage.style.height = icon.size + "px";
+                    iconImage.style.backgroundImage = "url('" + icon.url + "')";
+                    iconImage.style.backgroundSize = icon.size + "px auto";
                 } else if (icon.type == "animation") {
                     iconImage = document.createElement("div");
                     iconImage.className = "altus-icon altus-icon-sprite";
