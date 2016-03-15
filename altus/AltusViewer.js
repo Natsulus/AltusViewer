@@ -77,15 +77,26 @@ AltusViewer.updateSettings = function(checkbox) {
     }
 };
 
-AltusViewer.updateIcons = function(form) {
-    $.each(AltusViewer.iconList, function(key) {
-        var value = +form[key].value;
+AltusViewer.updateIcons = function(form, all) {
+    var value;
+    $.each(AltusViewer.iconList, function (key) {
+        if (all) value = +form["all-icon-size"].value;
+        else value = +form[key].value;
         if (value >= 12 && value <= 40) {
+            if (all) form[key].value = value;
             AltusViewer.iconList[key].size = value;
             AltusViewer.sizes[key] = value;
-            $(".av-icon-table").find("div[menu-icon='" + key + "']").css({"width": value + "px", "height": value + "px", "backgroundSize": value + "px auto"});
+            $(".av-icon-table").find("div[menu-icon='" + key + "']").css({
+                "width": value + "px",
+                "height": value + "px",
+                "backgroundSize": value + "px auto"
+            });
             $(".iconwrapper[tooltip='" + key + "']").css("top", Math.ceil((value - 8) / 2.5) + "px");
-            $(".iconwrapper[tooltip='" + key + "']").find("*").css({"width": value + "px", "height": value + "px", "backgroundSize": value + "px auto"});
+            $(".iconwrapper[tooltip='" + key + "']").find("*").css({
+                "width": value + "px",
+                "height": value + "px",
+                "backgroundSize": value + "px auto"
+            });
         } else {
             form[key].value = AltusViewer.iconList[key].size;
         }
@@ -191,6 +202,10 @@ AltusViewer.createSettings = function() {
     });
 
     settingsInner += ''
+        + '                        <tr>'
+        + '                        <td colspan="2"><input type="button" value="Update All Icons" onclick="AltusViewer.updateIcons(this.form, true)""></td>'
+        + '                        <td><input type="number" min="12" max="40" step="4" name="all-icon-size" value="32"></td>'
+        + '                        </td>'
         + '                    </tbody>'
         + '                </table>'
         + '                    <input type="button" value="Update" onclick="AltusViewer.updateIcons(this.form)" style="float: right; margin-top: 10px;">'
