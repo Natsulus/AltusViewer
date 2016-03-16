@@ -540,7 +540,7 @@ AltusViewer.prototype.getDescription = function() {
 };
 
 AltusViewer.prototype.getVersion = function() {
-    return "1.0.0";
+    return "1.0.1";
 };
 
 AltusViewer.prototype.getAuthor = function() {
