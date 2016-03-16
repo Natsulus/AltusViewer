@@ -504,6 +504,10 @@ AltusViewer.parseIcon = function(node) {
 };
 
 AltusViewer.process = function() {
+    $(".edited:not(edited-scanned)").each(function() {
+        $(this).siblings().filter(".av-icons-scanned").removeClass("av-icons-scanned");
+    }).addClass("edited-scanned");
+
     $(".message-content>span:not(.av-icons-scanned),.comment .markup>span:not(.av-icons-scanned)").each(function() {
         var textnodes = $(this).contents().filter(function() {
             return this.nodeType === 3;
