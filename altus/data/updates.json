@@ -5,7 +5,8 @@
 		"data": [
 			"Added Update Panel",
 			"Update Panel displays a change/update log",
-			"Displays current version and new version if available"
+			"Displays current version and new version if available",
+			"Disabling the plugin will now revert icons to text"
 		]
 	},
 	{

@@ -11,6 +11,9 @@ AltusViewer.settingsButton = null;
 AltusViewer.settingsPanel = null;
 AltusViewer.settingsLastTab = null;
 AltusViewer.animationSpeed = 0.04;
+AltusViewer.iconList = {};
+AltusViewer.updateLog = [];
+AltusViewer.isReady = false;
 
 AltusViewer.prototype.changeTab = function(tab) {
     AltusViewer.settingsLastTab = tab;
@@ -27,6 +30,8 @@ AltusViewer.prototype.changeTab = function(tab) {
         case "av-icons-tab":
             break;
         case "av-stats-tab":
+            break;
+        case "av-updates-tab":
             break;
     }
 };
@@ -119,6 +124,7 @@ AltusViewer.createSettings = function() {
         + '        <div class="tab-bar TOP">'
         + '            <div class="tab-bar-item av-tab" id="av-settings-tab" onclick="AltusViewer.prototype.changeTab(\'av-settings-tab\');">Altus Viewer</div>'
         + '            <div class="tab-bar-item av-tab" id="av-icons-tab" onclick="AltusViewer.prototype.changeTab(\'av-icons-tab\');">Icons</div>'
+        + '            <div class="tab-bar-item av-tab" id="av-updates-tab" onclick="AltusViewer.prototype.changeTab(\'av-updates-tab\');">Updates</div>'
         //+ '            <div class="tab-bar-item av-tab" id="av-stats-tab" onclick="AltusViewer.prototype.changeTab(\'av-stats-tab\');">Stats</div>'
         + '        </div>'
         + '        <div class="av-settings">'
@@ -213,6 +219,9 @@ AltusViewer.createSettings = function() {
         + '            </div>'
         + '            <div class="av-pane control-group" id="av-stats-pane" style="display: none;">'
         + '                <span>Stats</span>'
+        + '            </div>'
+        + '            <div class="av-pane control-group" id="av-updates-pane" style="display: none;">'
+        + '                <span>Current Version: ' + AltusViewer.prototype.getVersion() + '</span>'
         + '            </div>'
         + '        </div>'
         + '    </div>'
@@ -323,10 +332,6 @@ AltusViewer.settingsArray = {
     }
 };
 
-AltusViewer.iconList = {};
-
-AltusViewer.isReady = false;
-
 AltusViewer.prototype.saveSettings = function() {
     localStorage.setItem("altusSettings", JSON.stringify(AltusViewer.settings));
 };
@@ -405,11 +410,21 @@ AltusViewer.loadImages = function(enabled) {
     }
 };
 
+AltusViewer.getUpdateLog = function() {
+    $.getJSON("https://natsulus.github.io/AltusViewer/altus/data/updates.json", function(log) {
+        AltusViewer.updateLog = log;
+    }).fail(function(xhr, status, error) {
+        console.log("[Altus Viewer] Error Loading Update Log '" + status + ":" + error + "'.");
+    });
+};
+
 AltusViewer.prototype.load = function() {
     AltusViewer.settings = JSON.parse(localStorage.getItem("altusSettings")) || AltusViewer.prototype.getDefaultSettings();
     AltusViewer.sizes = JSON.parse(localStorage.getItem("altusSizes")) || AltusViewer.prototype.getDefaultSizes();
     AltusViewer.prototype.saveSettings();
     AltusViewer.prototype.saveSizes();
+
+    AltusViewer.getUpdateLog();
 
     AltusViewer.loadImages(AltusViewer.settings["altus-hd-icons"]);
 
@@ -434,6 +449,7 @@ AltusViewer.prototype.unload = function() {
 };
 
 AltusViewer.prototype.start = function() {
+    setInterval(AltusViewer.getUpdateLog, 1000 * 60 * 60);
     MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
     var startTry = setInterval(function() {
         if (AltusViewer.isReady) clearInterval(startTry);
