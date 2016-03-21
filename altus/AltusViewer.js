@@ -1,12 +1,14 @@
 //META{"name":"AltusViewer"}*//
-
 function AltusViewer() {}
 
 var observer;
 
 AltusViewer.settings = null;
 AltusViewer.sizes = null;
-AltusViewer.loadedSizes = {"32": false, "400": false};
+AltusViewer.loadedSizes = {
+    "32": false,
+    "400": false
+};
 AltusViewer.settingsButton = null;
 AltusViewer.settingsPanel = null;
 AltusViewer.settingsLastTab = null;
@@ -47,7 +49,12 @@ AltusViewer.updateSettings = function(checkbox) {
         case "altus-icons":
             if (enabled) {
                 $(".chat").each(function() {
-                    observer.observe(this, {childList: true, characterData: true, attributes: false, subtree: true});
+                    observer.observe(this, {
+                        childList: true,
+                        characterData: true,
+                        attributes: false,
+                        subtree: true
+                    });
                 });
                 AltusViewer.process();
             } else {
@@ -84,7 +91,7 @@ AltusViewer.updateSettings = function(checkbox) {
 
 AltusViewer.updateIcons = function(form, all) {
     var value;
-    $.each(AltusViewer.iconList, function (key) {
+    $.each(AltusViewer.iconList, function(key) {
         if (all) value = +form["all-icon-size"].value;
         else value = +form[key].value;
         if (value >= 12 && value <= 40) {
@@ -119,56 +126,22 @@ AltusViewer.createSettings = function() {
         }
     });
 
-    var settingsInner = ''
-        + '<div class="scroller-wrap">'
-        + '    <div class="scroller settings-wrapper settings-panel">'
-        + '        <div class="tab-bar TOP">'
-        + '            <div class="tab-bar-item av-tab" id="av-settings-tab" onclick="AltusViewer.prototype.changeTab(\'av-settings-tab\');">Altus Viewer</div>'
-        + '            <div class="tab-bar-item av-tab" id="av-icons-tab" onclick="AltusViewer.prototype.changeTab(\'av-icons-tab\');">Icons</div>'
-        + '            <div class="tab-bar-item av-tab" id="av-updates-tab" onclick="AltusViewer.prototype.changeTab(\'av-updates-tab\');">Updates</div>'
-        //+ '            <div class="tab-bar-item av-tab" id="av-stats-tab" onclick="AltusViewer.prototype.changeTab(\'av-stats-tab\');">Stats</div>'
-        + '        </div>'
-        + '        <div class="av-settings">'
-        + ''
-        + '            <div class="av-pane control-group" id="av-settings-pane" style="display: none;">'
-        + '                <ul class="checkbox-group">';
+    var settingsInner = '<div class="scroller-wrap">' + '<div class="scroller settings-wrapper settings-panel">' + '<div class="tab-bar TOP">' + '<div class="tab-bar-item av-tab" id="av-settings-tab" onclick="AltusViewer.prototype.changeTab(\'av-settings-tab\');">Altus Viewer</div>' + '<div class="tab-bar-item av-tab" id="av-icons-tab" onclick="AltusViewer.prototype.changeTab(\'av-icons-tab\');">Icons</div>' + '<div class="tab-bar-item av-tab" id="av-updates-tab" onclick="AltusViewer.prototype.changeTab(\'av-updates-tab\');">Updates</div>'
+        //+ '<div class="tab-bar-item av-tab" id="av-stats-tab" onclick="AltusViewer.prototype.changeTab(\'av-stats-tab\');">Stats</div>'
+        + '</div>' + '<div class="av-settings">' + '<div class="av-pane control-group" id="av-settings-pane" style="display: none;">' + '<ul class="checkbox-group">';
 
     for (var aSetting in AltusViewer.settingsArray) {
         var setting = AltusViewer.settingsArray[aSetting];
         var id = setting["id"];
         if (setting["implemented"]) {
-            settingsInner += ''
-                + '<li>'
-                + '    <div class="checkbox" onclick="AltusViewer.updateSettings(this);">'
-                + '        <div class="checkbox-inner">'
-                + '            <input type="checkbox" id="' + id + '" ' + (AltusViewer.settings[id] ? "checked" : "") + '>'
-                + '            <span></span>'
-                + '        </div>'
-                + '        <span>' + aSetting + ' - ' + setting["info"]
-                + '        </span>'
-                + '    </div>'
-                + '</li>';
+            settingsInner += '<li>' + '<div class="checkbox" onclick="AltusViewer.updateSettings(this);">' + '<div class="checkbox-inner">' + '<input type="checkbox" id="' + id + '" ' + (AltusViewer.settings[id] ? "checked" : "") + '>' + '<span></span>' + '</div>' + '<span>' + aSetting + ' - ' + setting["info"] + '</span>' + '</div>' + '</li>';
         }
     }
 
-    settingsInner += ''
-        + '                </ul>'
-        + '            </div>'
-        + '            <div class="av-pane control-group" id="av-icons-pane" style="display: none;">'
-        + '                <table class="av-icon-table">'
-        + '                    <thead>'
-        + '                        <tr>'
-        + '                            <th width="100px">Icon</th>'
-        + '                            <th>Identifier</th>'
-        + '                            <th width="50px">Size</th>'
-        + '                        </tr>'
-        + '                    </thead>'
-        + '                    <form name="iconform" action="" method="get">'
-        + '                    <tbody>';
+    settingsInner += '</ul>' + '</div>' + '<div class="av-pane control-group" id="av-icons-pane" style="display: none;">' + '<table class="av-icon-table">' + '<thead>' + '<tr>' + '<th width="100px">Icon</th>' + '<th>Identifier</th>' + '<th width="50px">Size</th>' + '</tr>' + '</thead>' + '<form name="iconform" action="" method="get">' + '<tbody>';
 
     $.each(AltusViewer.iconList, function(key, icon) {
-        settingsInner += ''
-            + '                    <tr>';
+        settingsInner += '<tr>';
 
 
         var iconImage;
@@ -195,38 +168,31 @@ AltusViewer.createSettings = function() {
         }
         iconImage.setAttribute("menu-icon", key);
 
-        settingsInner += ''
-            + '                        <td>' + iconImage.outerHTML + '</td>';
+        settingsInner += '<td>' + iconImage.outerHTML + '</td>';
 
-        settingsInner += ''
-            + '                        <td>' + key + '</td>';
+        settingsInner += '<td>' + key + '</td>';
 
-        settingsInner += ''
-            + '                        <td><input type="number" min="12" max="40" step="4" name="' + key + '" value="' + icon.size + '"></td>';
+        settingsInner += '<td><input type="number" min="12" max="40" step="4" name="' + key + '" value="' + icon.size + '"></td>';
 
-        settingsInner += ''
-            + '                    </tr>';
+        settingsInner += '</tr>';
     });
 
-    settingsInner += ''
-        + '                        <tr>'
-        + '                        <td colspan="2"><input type="button" value="Update All Icons" onclick="AltusViewer.updateIcons(this.form, true)""></td>'
-        + '                        <td><input type="number" min="12" max="40" step="4" name="all-icon-size" value="32"></td>'
-        + '                        </td>'
-        + '                    </tbody>'
-        + '                </table>'
-        + '                    <input type="button" value="Update" onclick="AltusViewer.updateIcons(this.form)" style="float: right; margin-top: 10px;">'
-        + '                    </form>'
-        + '            </div>'
-        + '            <div class="av-pane control-group" id="av-stats-pane" style="display: none;">'
-        + '                <span>Stats</span>'
-        + '            </div>'
-        + '            <div class="av-pane control-group" id="av-updates-pane" style="display: none;">'
-        + '                <span>Current Version: ' + AltusViewer.prototype.getVersion() + '</span>'
-        + '            </div>'
-        + '        </div>'
-        + '    </div>'
-        + '</div>';
+    settingsInner += '<tr>' + '<td colspan="2"><input type="button" value="Update All Icons" onclick="AltusViewer.updateIcons(this.form, true)""></td>' + '<td><input type="number" min="12" max="40" step="4" name="all-icon-size" value="32"></td>' + '</td>' + '</tbody>' + '</table>' + '<input type="button" value="Update" onclick="AltusViewer.updateIcons(this.form)" style="float: right; margin-top: 10px;">' + '</form>' + '</div>' + '<div class="av-pane control-group" id="av-stats-pane" style="display: none;">' + '<span>Stats</span>' + '</div>' + '<div class="av-pane control-group" id="av-updates-pane" style="display: none;">' + '<span>Current Version: ' + AltusViewer.prototype.getVersion() + '</span>';
+    if (AltusViewer.prototype.getVersion() == AltusViewer.updateLog[0].version)
+        settingsInner += '<span style="float: right;">Up To Date</span>';
+    else
+        settingsInner += '<span style="float: right;"><a href="https://raw.githubusercontent.com/Natsulus/AltusViewer/gh-pages/altus/AltusViewer.js" download>Update to Version ' + AltusViewer.updateLog[0].version + '</a></span>';
+
+    settingsInner += '<div class="update-log" style="height: 325px;">';
+    for (var i = 0; i < AltusViewer.updateLog.length; i++) {
+        settingsInner += '<div class="update-title">' + AltusViewer.updateLog[i].version + ' - ' + AltusViewer.updateLog[i].type +'</div>';
+        settingsInner += '<div class="update-list">';
+        for (var j = 0; j < AltusViewer.updateLog[i].data.length; j++) {
+            settingsInner += '<li>' + AltusViewer.updateLog[i].data[j] + '</li>';
+        }
+        settingsInner += '</div>';
+    }
+    settingsInner += '</div></div></div></div></div>';
 
     function showSettings() {
         $(".tab-bar-item").removeClass("selected");
@@ -358,7 +324,7 @@ AltusViewer.prototype.getDefaultSizes = function() {
     return defaultSizes;
 };
 
-AltusViewer.applySizes = function () {
+AltusViewer.applySizes = function() {
     for (var icon in AltusViewer.sizes) {
         if (AltusViewer.iconList.hasOwnProperty(icon)) {
             AltusViewer.iconList[icon].size = AltusViewer.sizes[icon];
@@ -433,10 +399,11 @@ AltusViewer.prototype.load = function() {
 
     $('head').append(
         '<style id="altus-css">'
+        + '.update-title {font-size: 1.5em; margin-top: 0.67em; margin-bottom: 0.67em; margin-left: 0; margin-right: 0;}'
+        + '.update-list {list-style-type: disc}'
+        + '.update-log {background: white url(https://natsulus.github.io/AltusViewer/altus/data//bg-panel.png) repeat-x bottom left; border: 1px solid #3C769D; color: #333333; padding: 11px; margin: 10px 0; overflow-y: auto; }'
         + '.iconwrapper {display: inline-block; position: relative;}'
-        + '.altus-icon-sprite {animation: play 1s steps(1) infinite;}'
-        + '@keyframes play {from{background-position: 0 0;} to {background-position: 0 100%;}}'
-        + '.av-icon-table {text-align: center; width: 520px; white-space: nowrap; margin: 0 auto;}'
+        + '.altus-icon-sprite {animation: play 1s steps(1) infinite;}' + '@keyframes play {from{background-position: 0 0;} to {background-position: 0 100%;}}' + '.av-icon-table {text-align: center; width: 520px; white-space: nowrap; margin: 0 auto;}'
         + '.av-icon-table thead th {background: #EBEBEB!important; text-align: center;}'
         + '.av-icon-table tbody td, .av-icon-table thead th {color: #87909c!important; padding: 5px!important;}'
         + '.av-icon-table tbody tr {background: #F7F7F7!important;}'
@@ -466,7 +433,12 @@ AltusViewer.prototype.start = function() {
             $(".chat").each(function() {
                 clearInterval(chatRetry);
                 if (AltusViewer.settings["altus-icons"]) {
-                    observer.observe(this, {childList: true, characterData: true, attributes: false, subtree: true});
+                    observer.observe(this, {
+                        childList: true,
+                        characterData: true,
+                        attributes: false,
+                        subtree: true
+                    });
                     AltusViewer.process();
                 }
             });
@@ -542,6 +514,11 @@ AltusViewer.process = function() {
 };
 
 AltusViewer.prototype.stop = function() {
+    observer.disconnect();
+    $(".iconwrapper").replaceWith(function() {
+        return $(this).attr("tooltip");
+    });
+    $(".av-icons-scanned").removeClass("av-icons-scanned");
     AltusViewer.settingsButton.hide();
     console.log("[Altus Viewer] Stopped");
 };
@@ -559,7 +536,7 @@ AltusViewer.prototype.getDescription = function() {
 };
 
 AltusViewer.prototype.getVersion = function() {
-    return "1.0.1";
+    return "1.1.0";
 };
 
 AltusViewer.prototype.getAuthor = function() {
