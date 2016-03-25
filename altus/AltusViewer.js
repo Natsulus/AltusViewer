@@ -380,10 +380,13 @@ AltusViewer.loadImages = function(enabled) {
 };
 
 AltusViewer.getUpdateLog = function() {
-    $.getJSON("https://natsulus.github.io/AltusViewer/altus/data/updates.json", function(log) {
-        AltusViewer.updateLog = log;
-    }).fail(function(xhr, status, error) {
-        console.log("[Altus Viewer] Error Loading Update Log '" + status + ":" + error + "'.");
+    $.ajax({
+        url: "https://natsulus.github.io/AltusViewer/altus/data/updates.json",
+        dataType: 'json',
+        async: false,
+        success: function (log) {
+            AltusViewer.updateLog = log;
+        }
     });
 };
 

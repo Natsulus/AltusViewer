@@ -1,5 +1,12 @@
 [
 	{
+		"version": "1.1.1",
+		"type": "Bug Fix",
+		"data": [
+			"Sometimes failing to load the settings panel has been fixed."
+		]
+	},
+	{
 		"version": "1.1.0",
 		"type": "Feature Update",
 		"data": [
